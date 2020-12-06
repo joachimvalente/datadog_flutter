@@ -256,7 +256,7 @@ public class SwiftDatadogFlutterPlugin: NSObject, FlutterPlugin {
       case "log":
         let logLevel = args!["level"] as! String
         let logMessage = args!["message"] as! String
-        let attributes = args?["attributes"] as? [String : Encodable]
+        let attributes = args!["attributes"] as! [String:Any]
         switch logLevel {
           case "debug":
             getLogger(args)?.debug(logMessage, attributes: attributes)
@@ -331,5 +331,16 @@ public class SwiftDatadogFlutterPlugin: NSObject, FlutterPlugin {
     }
 
     return TrackingConsent.pending
+  }
+
+  private func toEncodable(_ dict: [String:Any]) -> [String:Encodable] {
+    var ret = [String:Encodable]()
+    for (k, v) in dict {
+      // TODO: support other Encodable types
+      if let s = v as? String {
+          ret[k] = s
+      }
+    }
+    return ret
   }
 }
