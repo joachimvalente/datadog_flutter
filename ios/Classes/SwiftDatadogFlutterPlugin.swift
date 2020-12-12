@@ -340,6 +340,18 @@ public class SwiftDatadogFlutterPlugin: NSObject, FlutterPlugin {
       if let s = v as? String {
           ret[k] = s
       }
+      else if let s = v as? Bool {
+          ret[k] = s
+      }
+      else if let s = v as? [String:Any] {
+        let es = toEncodable(s)
+        for (k2, v2) in es {
+          ret["\(k)__\(k)"] = v2
+        }
+      }
+      else {
+        print("Unsupported type \(type(of: v)) for [\(k)]=[\(v)]")
+      }
     }
     return ret
   }
