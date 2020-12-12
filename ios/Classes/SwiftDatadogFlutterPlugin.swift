@@ -346,7 +346,7 @@ public class SwiftDatadogFlutterPlugin: NSObject, FlutterPlugin {
       else if let s = v as? [String:Any] {
         let es = toEncodable(s)
         for (k2, v2) in es {
-          ret["\(k)__\(k)"] = v2
+          ret["\(k)__\(k2)"] = v2
         }
       }
       else {
