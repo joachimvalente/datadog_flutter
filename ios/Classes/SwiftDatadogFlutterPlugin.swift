@@ -337,22 +337,46 @@ public class SwiftDatadogFlutterPlugin: NSObject, FlutterPlugin {
     var ret = [String:Encodable]()
     for (k, v) in dict {
       // TODO: support other Encodable types
-      if let s = v as? String {
-          ret[k] = s
-      }
-      else if let s = v as? Bool {
-          ret[k] = s
-      }
-      else if let s = v as? [String:Any] {
-        let es = toEncodable(s)
-        for (k2, v2) in es {
-          ret["\(k)__\(k2)"] = v2
+      if let ev = toEncodableSimple(v) {
+        ret[k] = ev
+      } else if let m = v as? [String:Any] {
+        for (k2, v2) in m {
+          if let ev2 = toEncodableSimple(v2) {
+            ret["\(k)__\(k2)"] = ev2
+          } else {
+            print("Unsupported type \(type(of: v2)) for [\(k)__\(k2)]=[\(v2)]")
+          }
         }
-      }
-      else {
+      } else if let a = v as? [Any] {
+        for (i, v2) in a.enumerated() {
+          if let ev2 = toEncodableSimple(v2) {
+            ret["\(k)__\(i)"] = ev2
+          } else {
+            print("Unsupported type \(type(of: v2)) for [\(k)__\(i)]=[\(v2)]")
+          }
+        }
+      } else {
         print("Unsupported type \(type(of: v)) for [\(k)]=[\(v)]")
       }
     }
     return ret
+  }
+
+  private func toEncodableSimple(_ val: Any) -> Encodable? {
+    if let v = val as? String { return v }
+    if let v = val as? Bool { return v }
+    if let v = val as? Int { return v }
+    if let v = val as? Float { return v }
+    if let v = val as? Double { return v }
+    if let v = val as? UInt { return v }
+    if let v = val as? Int8 { return v }
+    if let v = val as? Int16 { return v }
+    if let v = val as? Int32 { return v }
+    if let v = val as? Int64 { return v }
+    if let v = val as? UInt8 { return v }
+    if let v = val as? UInt16 { return v }
+    if let v = val as? UInt32 { return v }
+    if let v = val as? UInt64 { return v }
+    return nil
   }
 }
