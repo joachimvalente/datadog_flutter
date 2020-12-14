@@ -336,7 +336,6 @@ public class SwiftDatadogFlutterPlugin: NSObject, FlutterPlugin {
   private func toEncodable(_ dict: [String:Any]) -> [String:Encodable] {
     var ret = [String:Encodable]()
     for (k, v) in dict {
-      // TODO: support other Encodable types
       if let ev = toEncodableSimple(v) {
         ret[k] = ev
       } else if let m = v as? [String:Any] {
