@@ -152,7 +152,6 @@ public class DatadogFlutterPlugin: FlutterPlugin, MethodCallHandler {
       call.method == "rumAddAttribute" -> {
         GlobalRum.addAttribute(call.argument<String>("key")!!, call.argument<String>("value"))
         result.success(true)
-        logger = builder.build()
       }
       call.method == "rumAddError" -> {
         GlobalRum.get().addErrorWithStacktrace(
