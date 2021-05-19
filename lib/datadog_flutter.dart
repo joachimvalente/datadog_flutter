@@ -28,7 +28,7 @@ class DatadogFlutter {
       'androidRumApplicationId': androidRumApplicationId,
       'clientToken': clientToken,
       'environment': environment,
-      'flavor': flavorName,
+      'flavorName': flavorName,
       'iosRumApplicationId': iosRumApplicationId,
       'serviceName': serviceName,
       'trackingConsent': trackingConsent.index,
