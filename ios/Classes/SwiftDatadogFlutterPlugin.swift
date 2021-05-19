@@ -256,7 +256,8 @@ public class SwiftDatadogFlutterPlugin: NSObject, FlutterPlugin {
       case "log":
         let logLevel = args!["level"] as! String
         let logMessage = args!["message"] as! String
-        let attributes = args!["attributes"] as! [String:Encodable]
+        let attributesRaw = args!["attributes"] as! [String:Any]
+        let attributes = toEncodable(attributesRaw)
         switch logLevel {
           case "debug":
             getLogger(args)?.debug(logMessage, attributes: attributes)
