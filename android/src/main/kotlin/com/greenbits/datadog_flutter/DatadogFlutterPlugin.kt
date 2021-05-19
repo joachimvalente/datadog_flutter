@@ -75,7 +75,7 @@ public class DatadogFlutterPlugin: FlutterPlugin, MethodCallHandler {
         val credentials = Credentials(
           call.argument<String>("clientToken")!!,
           call.argument<String>("serviceName")!!,
-          call.argument<String>("flavor")!!,
+          call.argument<String>("flavorName")!!,
           rumApplicationId,
           call.argument<String>("serviceName")!!
         )
